@@ -9,6 +9,7 @@
   "dependencies": {
     "@better-scroll/core": "^2.4.2",
     "axios": "^0.22.0",
+    "better-scroll": "^1.13.2",
     "core-js": "^3.6.5",
     "path": "^0.12.7",
     "vant": "^2.12.29",

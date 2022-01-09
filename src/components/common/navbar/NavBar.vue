@@ -20,10 +20,12 @@ export default {
     text-align: center;
   }
 
-  .left,.right{
+  .left{
     width: 60px;
   }
-
+  .right{
+    width: 60px;
+  }
   .center{
     flex: 1;
   }
