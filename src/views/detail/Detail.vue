@@ -10,7 +10,8 @@
       <detail-comment-info :comment-info="commentInfo" ref="comment"/>
       <goods-list ref="recommend" :goods="goodsList"></goods-list>
     </scroll>
-      <detail-bottom-bar></detail-bottom-bar>
+
+      <detail-bottom-bar @addToCart="addToCart"></detail-bottom-bar>
     <back-top @backClick="backClick" v-show="isShow"></back-top>
   </div>
 </template>
@@ -69,17 +70,6 @@ export default {
       this.commentInfo = rate.list[0];
     },
     betterScroll(position) {
-      // if((-position.y)>this.themTopYs[0]&&(-position.y)<this.themTopYs[1]){
-      //   this.$refs.detailNavBar.activeIndex =0;
-      // }else if((-position.y)>this.themTopYs[1]&&(-position.y)<this.themTopYs[2]){
-      //   this.$refs.detailNavBar.activeIndex =1;
-      // }else if((-position.y)>this.themTopYs[2]&&(-position.y)<this.themTopYs[3]){
-      //   this.$refs.detailNavBar.activeIndex =3;
-      // }else if((-position.y)>this.themTopYs[3]&&(-position.y)<this.themTopYs[4]){
-      //   this.$refs.detailNavBar.activeIndex =4;
-      // }else {
-      //
-      // }
       (-position.y)>1000?this.isShow=true:this.isShow=false;
       for(let i=0; i<this.themTopYs.length-1;i++){ //i str
         if((-position.y)>=this.themTopYs[i]&&(-position.y)<this.themTopYs[i+1]){
@@ -87,7 +77,18 @@ export default {
         }
       }
     },
-
+    addToCart(){
+      //获取购物车需要展示的信息
+       const product ={};
+       product.image = this.topImages[0];
+       product.desc = this.goods.desc;
+       product.title = this.goods.title;
+       product.price = this.goo  ds.newPrice;
+       product.id = this.id;
+       product.realPrice = this.goods.realPrice;
+       // this.$store.dispatch('addCart',product);
+       this.$store.commit('addCart',product);
+    },
     imgLoad(){
       this.$refs.scroll.refresh();
       this.themTopYs.push(0)
@@ -95,7 +96,6 @@ export default {
       this.themTopYs.push(this.$refs.comment.$el.offsetTop)
       this.themTopYs.push(this.$refs.recommend.$el.offsetTop)
       this.themTopYs.push(Number.MAX_VALUE);
-      console.log(this.themTopYs)
     },
     titleClick(index){
       this.$refs.scroll.scrollTo(0,-this.themTopYs[index],300);

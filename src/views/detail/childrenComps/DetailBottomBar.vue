@@ -27,7 +27,6 @@ export default {
   name: "DetailBottomBar",
   methods: {
     addToCart(event) {
-      // this.$refs.ball.run(event.target)
       this.$emit('addToCart')
     }
   }
