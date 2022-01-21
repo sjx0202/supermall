@@ -83,11 +83,11 @@ export default {
        product.image = this.topImages[0];
        product.desc = this.goods.desc;
        product.title = this.goods.title;
-       product.price = this.goo  ds.newPrice;
+       product.price = this.goods.newPrice;
        product.id = this.id;
        product.realPrice = this.goods.realPrice;
-       // this.$store.dispatch('addCart',product);
-       this.$store.commit('addCart',product);
+       this.$store.dispatch('addCart',product);
+       // this.$store.commit('addCart',product);
     },
     imgLoad(){
       this.$refs.scroll.refresh();

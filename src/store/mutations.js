@@ -1,11 +1,14 @@
+import {ADD_T0_CART,ADD_COUNTER} from "./mutations-types";
+
 const mutations = {
- addCounter(state,index){
+  ADD_COUNTER(state,index){
    state.cartList[index].count += 1;
  },
-  addToCart(state,payload){
+  ADD_T0_CART(state,payload){
+    payload.checked=true;
     state.cartList.push(payload);
   },
-  addCart(state,payload){
+  // addCart(state,payload){
    //第一种方法
     // 1.通过es6  find方法遍历数组第一次进来遍历find find方法用于查找数组中满足条件的中的第一个值 返回给oldInfo
     // const oldInfo = state.cartList.find(item => item.id === payload.id);
@@ -21,21 +24,22 @@ const mutations = {
    // }
 
     //第二种方法
-    let oldInfo = null;
-    for(let item of state.cartList){
-      if(item.id===payload.id){
-        oldInfo = item;
-        console.log(oldInfo);
-      }
-    }
-    if(oldInfo){
-        const index=state.cartList.indexOf(oldInfo);
-        console.log(index);
-        state.cartList[index].count += 1;
-    }else {
-      payload.count = 1;
-      state.cartList.push(payload)
-    }
-  }
+    //区别第一种方法是需要一个变量来转存 因为find遍历可以把满足条件的第一个值 用一个变量接收过来
+  //   let oldInfo = null;
+  //   for(let item of state.cartList){
+  //     if(item.id===payload.id){
+  //       oldInfo = item;
+  //       console.log(oldInfo);
+  //     }
+  //   }
+  //   if(oldInfo){
+  //       const index=state.cartList.indexOf(oldInfo);
+  //       console.log(index);
+  //       state.cartList[index].count += 1;
+  //   }else {
+  //     payload.count = 1;
+  //     state.cartList.push(payload)
+  //   }
+  // }
 }
 export default mutations;
