@@ -1,6 +1,6 @@
 <template>
   <div class="cart-list">
-    <scroll class="cart-list">
+    <scroll class="cart-list" ref="scroll">
     <cart-list-item @checkItem="checkItem"></cart-list-item>
     </scroll>
     <div class="all-checkout">
@@ -17,6 +17,7 @@
 <script>
 import Scroll from 'components/common/scroll/Scroll'
 import CartListItem from "./CartListItem";
+import {debounce} from "../../common/utils";
 export default {
   name: "CartList",
   data(){
@@ -34,6 +35,7 @@ export default {
   computed:{
   },
   activated() {
+    this.$refs.scroll.refresh();
     //进入页面判断价格  然后判断有无选中的按钮。如果有false没有true在计算价格
     this.totalMoney = 0;
     this.checkNum = 0;
@@ -77,7 +79,7 @@ export default {
     totalPriceAll(){
        this.itemCheckAll.forEach((item)=>{
          this.checkNum+=item.count;
-         this.totalMoney+=item.realPrice*item.count;
+         this.totalMoney+= parseFloat(item.realPrice*item.count) ;
        })
      },
     //全选让所有checked为true然后再过滤在计算总价
@@ -91,6 +93,12 @@ export default {
         this.totalPriceAll()
       });
     }
+  },
+  mounted() {
+    const refresh = debounce(this.$refs.scroll.refresh,0);
+    this.$bus.$on('itemLoadCart',()=>{
+      refresh();
+    });
   },
   //监听itemCheckAll的变化
   watch:{

@@ -9,6 +9,10 @@
   --line-height: 1.5;
 }
 
+*{
+  touch-action: pan-y;
+}
+
 *,
 *::before,
 *::after {
@@ -41,6 +45,7 @@ a {
   height: 0;
   visibility: hidden;
 }
+
 
 .clear-fix {
   zoom: 1;

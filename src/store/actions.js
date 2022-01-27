@@ -11,11 +11,13 @@ const actions = {
       if(oldProduct){
         const index = context.state.cartList.indexOf(oldProduct);
         context.commit('ADD_COUNTER',index);
+        resolve('商品数量+1');
       }else{
         payload.count =1;
         context.commit('ADD_T0_CART',payload)
+        resolve('添加购物车成功');
       }
-      resolve();
+      // resolve();
     })
   }
 

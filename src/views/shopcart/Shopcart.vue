@@ -9,6 +9,7 @@
 import NavBar from "../../components/common/navbar/NavBar";
 import {mapGetters} from "vuex";
 import CartList from "./CartList";
+import {debounce} from "../../common/utils";
 export default {
   name: "Shopcart",
   components:{
@@ -22,7 +23,6 @@ export default {
       cart:'cartList'
     })
   }
-
 }
 </script>
 

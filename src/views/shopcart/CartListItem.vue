@@ -6,7 +6,7 @@
           <span :class="{'is-active':item.checked}" @click="checkItem(item)"><img src="~/assets/img/cart/tick.svg" alt=""></span>
         </span>
       </div>
-      <div class="item-checkout-center"><img :src="item.image" alt=""></div>
+      <div class="item-checkout-center"><img @load="imgLoadCart" :src="item.image" alt=""></div>
       <div class="item-checkout-right">
         <div>{{item.title}}</div>
         <div>{{item.desc}}</div>
@@ -31,6 +31,9 @@ export default {
     checkItem(item){
       item.checked = !item.checked;
       this.$emit('checkItem');
+    },
+    imgLoadCart(){
+      this.$bus.$emit('itemLoadCart');
     }
   },
 };

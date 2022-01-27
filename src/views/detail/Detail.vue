@@ -13,6 +13,7 @@
 
       <detail-bottom-bar @addToCart="addToCart"></detail-bottom-bar>
     <back-top @backClick="backClick" v-show="isShow"></back-top>
+    <toast :is-show="isShowed" :message="message"></toast>
   </div>
 </template>
 
@@ -30,6 +31,8 @@ import {getDetailData, Goods, Shop, GoodsParam, getRecommend} from "../../networ
 import {debounce} from "../../common/utils";
 import {itemlistenerMinXin,backtopMinXin} from "../../common/mixin";
 import GoodsList from "../../components/content/goods/GoodsList";
+import {mapActions, mapGetters} from "vuex";
+import Toast from "../../components/common/toast/Toast";
 export default {
   name: "Detail",
   mixins:[itemlistenerMinXin,backtopMinXin],
@@ -44,6 +47,8 @@ export default {
       goodsList: [],
       commentInfo: {},
       themTopYs:[],
+      isShowed:false,
+      message:''
     }
   },
   components: {
@@ -57,9 +62,10 @@ export default {
     DetailCommentInfo,
     DetailBottomBar,
     GoodsList,
-
+    Toast
   },
   methods: {
+    ...mapActions(['addCart']),
     async _getDetailData() {
       let {result: {itemInfo, columns, shopInfo, detailInfo, itemParams, rate}} = await getDetailData(this.id);
       this.topImages = itemInfo.topImages;
@@ -86,7 +92,17 @@ export default {
        product.price = this.goods.newPrice;
        product.id = this.id;
        product.realPrice = this.goods.realPrice;
-       this.$store.dispatch('addCart',product);
+       // this.$store.dispatch('addCart',product).then(res=>{
+       //   console.log(res);
+       // });
+       this.addCart(product).then(res=>{
+         this.isShowed=true;
+         this.message=res;
+         let that = this;
+         setTimeout(()=>{
+           that.isShowed = false;
+         },1000);
+       });
        // this.$store.commit('addCart',product);
     },
     imgLoad(){
